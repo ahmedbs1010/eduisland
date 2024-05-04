@@ -4,6 +4,8 @@ include '../../controler/coursC.php';
 include  '../../config/connexion.php';
 include  '../../controler/typecoursC.php';
 
+
+
 if(isset($_GET['id'])) {
   // Récupérer et nettoyer l'ID de cours de l'URL
   $idlesson = mysqli_real_escape_string($conn, $_GET['id']);
@@ -149,6 +151,7 @@ if(isset($_GET['id'])) {
       </div>
       <button type="submit" name="ajouter" class="main-button">Register to Course</button>
     </form>
+    
     <?php
     // Vérifier s'il y a un message d'erreur dans l'URL
     if(isset($_GET['error']) && $_GET['error'] == true) {
@@ -166,6 +169,7 @@ if(isset($_GET['id'])) {
     ?>
     
   </div>
+  
 
   <script src="js/script.js"></script>
   <!-- Footer -->

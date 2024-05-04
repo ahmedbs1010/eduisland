@@ -158,7 +158,7 @@ include '../../controler/coursC.php';
                 if(mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
                     $matiere = $row['matiere'];
-                    echo $matiere; // Afficher le titre de la collaboration
+                    echo $matiere; // Afficher le titre de  cours
                 } else {
                     echo "matiere inconnu";
                 }
@@ -172,29 +172,24 @@ include '../../controler/coursC.php';
                     </button>
                             <!-- Form for updating typecours -->
                           
-                             <div id="myModal_<?php echo $Typecours['idtypecours']; ?>" class="modal" style="display: none;" >
-                                <div class="modal-content">
-                                    <span class="close" onclick="closeModal('<?php echo $Typecours['idtypecours']; ?>')">&times;</span>
-                                    <form  onsubmit="return validateForm()" method="POST" name="formulaire" >
-                                        <input type="hidden" name="idtypecours" value="<?php echo $Typecours['idtypecours']; ?>">
-                                        <label for="emailuser">Course:</label>
-                                        <input id="emailuser" type="email" name="emailuser" value="<?php echo $Typecours['emailuser']; ?>"><br>
-                                        <label for="type">Type of course :</label>
-                                        <select id="type" name="type">
-                                            <option value="PDF" <?php if ($Typecours['type'] == 'PDF') echo 'selected'; ?>>PDF</option>
-                                            <option value="Live" <?php if ($Typecours['type'] == 'Live') echo 'selected'; ?>>Live</option>
-                                        </select><br>
-
-                                        
-                                        
-                
-                                       
-                                        
-                                        <button type="submit" name="update" class="btn btn-primary">Enregistrer</button>
-                                        
-                                    </form>
-                                </div>
-                            </div>
+                            <div id="myModal_<?php echo $Typecours['idtypecours']; ?>" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('<?php echo $Typecours['idtypecours']; ?>')">&times;</span>
+        <form onsubmit="return validateForm_<?php echo $Typecours['idtypecours']; ?>()" method="POST" name="formulaire">
+            <input type="hidden" name="idtypecours" value="<?php echo $Typecours['idtypecours']; ?>">
+            <label for="emailuser">Course:</label>
+            <input id="emailuser_<?php echo $Typecours['idtypecours']; ?>" type="email" name="emailuser" value="<?php echo $Typecours['emailuser']; ?>"><br>
+            <p id="error-emailuser_<?php echo $Typecours['idtypecours']; ?>" style="color:red;"></p>
+            <label for="type">Type of course:</label>
+            <select id="type_<?php echo $Typecours['idtypecours']; ?>" name="type">
+                <option value="PDF" <?php if ($Typecours['type'] == 'PDF') echo 'selected'; ?>>PDF</option>
+                <option value="Live" <?php if ($Typecours['type'] == 'Live') echo 'selected'; ?>>Live</option>
+            </select><br>
+            <p id="error-type_<?php echo $Typecours['idtypecours']; ?>" style="color:red;"></p>
+            <button type="submit" name="update" class="btn btn-primary">Enregistrer</button>
+        </form>
+    </div>
+</div>
                             
                             
                         
@@ -244,24 +239,28 @@ include '../../controler/coursC.php';
                                 </button>
                               
                                 <!-- Modal de modification -->
-                                <div id="myModal_<?php echo $Cours['idlesson']; ?>" class="modal" style="display: none;">
-                                    <div class="modal-content">
-                                        <span class="close" onclick="closeModal('<?php echo $Cours['idlesson']; ?>')">&times;</span>
-                                        <form method="POST" name="myForm">
-                                            <input type="hidden" name="idlesson" value="<?php echo $Cours['idlesson']; ?>"><br>
-                                            <label for="matiere">matiere:</label>
-                                            <input id="matiere" type="text" name="matiere" value="<?php echo $Cours['matiere']; ?>"><br>
-                                            <label for="nbheure">nb hours:</label>
-                                            <input id="nbheure" type="text" name="nbheure" value="<?php echo $Cours['nbheure']; ?>"><br>
-                                            <label for="niveau">niveau:</label>
-                                            <input name="niveau" id="niveau" value="<?php echo $Cours['niveau']; ?>"><br>
-                                            <label for="idt">id teacher:</label>
-                                            <input id="idt" type="text" name="idt" value="<?php echo $Cours['idt']; ?>"><br>
-                                            
-                                            <button type="submit" name="submit_update" class="btn btn-primary">Enregistrer</button>
-                                        </form>
-                                    </div>
-                                </div>
+<div id="myModal_<?php echo $Cours['idlesson']; ?>" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('<?php echo $Cours['idlesson']; ?>')">&times;</span>
+        <form onsubmit="return validateForm()" method="POST" name="myForm">
+            <input type="hidden" name="idlesson" value="<?php echo $Cours['idlesson']; ?>"><br>
+            <label for="matiere">Matière:</label>
+            <input id="matiere_<?php echo $Cours['idlesson']; ?>" type="text" name="matiere" value="<?php echo $Cours['matiere']; ?>"><br>
+            <p id="error-matiere_<?php echo $Cours['idlesson']; ?>" style="color:red;"></p>
+            <label for="nbheure">Nombre d'heures:</label>
+            <input id="nbheure_<?php echo $Cours['idlesson']; ?>" type="text" name="nbheure" value="<?php echo $Cours['nbheure']; ?>"><br>
+            <p id="error-nbheure_<?php echo $Cours['idlesson']; ?>" style="color:red;"></p>
+            <label for="niveau">Niveau:</label>
+            <input name="niveau" id="niveau_<?php echo $Cours['idlesson']; ?>" value="<?php echo $Cours['niveau']; ?>"><br>
+            <p id="error-niveau_<?php echo $Cours['idlesson']; ?>" style="color:red;"></p>
+            <label for="idt">ID enseignant:</label>
+            <input id="idt_<?php echo $Cours['idlesson']; ?>" type="text" name="idt" value="<?php echo $Cours['idt']; ?>"><br>
+            <p id="error-idt_<?php echo $Cours['idlesson']; ?>" style="color:red;"></p>
+            <button type="submit" name="submit_update" class="btn btn-primary">Enregistrer</button>
+        </form>
+    </div>
+</div>
+
                                 <!-- Fin Modal de modification -->
                                 <form action="" method="POST">
                                     <input type="hidden" name="idlesson" value="<?php echo $Cours['idlesson']; ?>">
@@ -292,32 +291,31 @@ include '../../controler/coursC.php';
 
 
 <script>
-    function validateForm() {
-        var email = document.getElementById("emailuser").value;
-        var type = document.getElementById("type").value;
-        var errorFlag = false;
+     function validateForm_<?php echo $Typecours['idtypecours']; ?>() {
+        var email = document.getElementById("emailuser_<?php echo $Typecours['idtypecours']; ?>").value;
+        var type = document.getElementById("type_<?php echo $Typecours['idtypecours']; ?>").value;
+        var errorEmail = document.getElementById("error-emailuser_<?php echo $Typecours['idtypecours']; ?>");
+        var errorType = document.getElementById("error-type_<?php echo $Typecours['idtypecours']; ?>");
 
-        // Vérification du champ email
+        // Vérification de l'email
         if (email === "") {
-            document.getElementById("error-emailuser").innerText = "Enter your email";
-            errorFlag = true;
-        } else {
-            document.getElementById("error-emailuser").innerText = "";
-        }
-
-        // Vérification du champ type de cours
-        if (type === "") {
-            document.getElementById("error-type").innerText = "Select type of course";
-            errorFlag = true;
-        } else {
-            document.getElementById("error-type").innerText = "";
-        }
-
-        // Empêcher l'envoi du formulaire si des champs sont vides ou incorrects
-        if (errorFlag) {
+            errorEmail.innerHTML = "Enter your email";
             return false;
+        } else {
+            errorEmail.innerHTML = "";
         }
+
+        // Vérification du type de cours
+        if (type === "") {
+            errorType.innerHTML = "Select a type of course";
+            return false;
+        } else {
+            errorType.innerHTML = "";
+        }
+
+        return true; // Le formulaire peut être soumis
     }
+    
 </script>
 
 <script >
