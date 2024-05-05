@@ -534,49 +534,48 @@ body {
 
 /* Style pour la modal */
 
-
-/* Modal */
-
-#myModal {
+.modal {
     display: none;
     position: fixed;
     z-index: 1001;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Fond semi-transparent */
-    backdrop-filter: blur(5px);
-    /* Flou de l'arrière-plan */
-}
-
-
-/* Contenu du modal */
-
-#myModal .modal-content {
-    background-color: #fefefe;
-    margin: 10% auto;
-    padding: 20px;
+    left: 60%;
+    top: 50%;
+    transform: translate(20%, 15%);
+    background-color: #fff;
+    border: 1px solid #ccc;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    /* Ajustez selon vos besoins */
+    max-width: 55%;
+    max-height: 68%;
+    overflow-y: auto;
 }
 
 
-/* Fermer le bouton */
+/* Style pour le contenu du formulaire à l'intérieur du modal */
 
-#myModal .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+.modal-content form {
+    max-width: 100%;
 }
 
-#myModal .close:hover,
-#myModal .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+
+/* Style pour les champs de saisie */
+
+.modal-content select {
+    width: 32%;
+    padding: 1px;
+    margin-bottom: 1px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #fff;
+    /* Couleur de fond */
+    color: #333;
+    /* Couleur du texte */
+    appearance: none;
+    /* Supprimer les styles par défaut du navigateur */
 }
 
 
@@ -601,11 +600,11 @@ body {
 /* Style pour les champs de saisie */
 
 .modal-content input[type="email"] {
-    width: 100%;
+    width: 40%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 3px;
     box-sizing: border-box;
     font-size: 16px;
 }
@@ -616,6 +615,7 @@ body {
 .modal-content label {
     font-weight: bold;
     margin-bottom: 8px;
+    border-radius: 5px;
     display: block;
     color: #333;
 }

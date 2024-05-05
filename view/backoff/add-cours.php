@@ -17,87 +17,135 @@ include '../../controler/coursC.php'; // Assure-toi que le chemin vers le contr√
     <link rel="stylesheet" href="assets/css/cours.css">
     
     
-   
+   <!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="css/style.css" rel="stylesheet">
+    
     <link rel="icon" href="4.png" type="image/x-icon">
     <title>EduIsland</title>
 </head>
 <body>
     
 
-    <!-- Barre de navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="4.png" alt="Logo" width="70" height="50" class="d-inline-block align-top me-2"> EduIsland
+<div id="overlay"></div>
+
+    
+
+
+<!-- SIDEBAR -->
+<section id="sidebar">
+<a href="#" class="brand">
+    <img src="4.png" alt="EduIsland Logo" class="logo">
+    <span class="text">EduIsland</span>
+</a>
+
+    <ul class="side-menu top">
+        <li>
+            <a href="#">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Dashboard</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Courses</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Pages
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Our Team</a></li>
-                            
-                            <li><a class="dropdown-item" href="#">tests</a></li>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-user'></i>
+                <span class="text">Users</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-pie-chart-alt-2'></i>
+                <span class="text">Forum</span>
+            </a>
+        </li>
+        <li >
+            <a href="index.php">
+                <i class='bx bxs-group'></i>
+                <span class="text">Courses</span>
+            </a>
+        </li>
+        <li class="active">
+            <a href="add-cours.php">
+                <i class='bx bxs-bar-chart-alt-2'></i>
+                <span class="text">Add Course</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-calendar-event'></i>
+                <span class="text">Events</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-megaphone'></i>
+                <span class="text">Claims</span>
+            </a>
+        </li>
+    </ul>
+<ul class="side-menu">
+<li>
+    <a href="#">
+        <i class='bx bxs-cog'></i>
+        <span class="text">Settings</span>
+    </a>
+</li>
+<li>
+    <a href="#" class="logout">
+        <i class='bx bxs-log-out-circle'></i>
+        <span class="text">Logout</span>
+    </a>
+</li>
+</ul>
 
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-                <button class="btn btn-primary d-none d-lg-block">Join Now <i class="fas fa-arrow-right ms-3"></i></button>
+</section>
+<!-- SIDEBAR -->
+
+
+
+
+<!-- CONTENT -->
+
+
+<!-- CONTENT -->
+<section id="content">
+    <!-- NAVBAR -->
+    <nav>
+        <i class='bx bx-menu' ></i>
+        <a href="#" class="nav-link">Categories</a>
+        <form action="#">
+            <div class="form-input">
+                <input type="search" placeholder="Search...">
+                <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
             </div>
-        </div>
+        </form>
+        <input type="checkbox" id="switch-mode" hidden>
+        <label for="switch-mode" class="switch-mode"></label>
+        <a href="#" class="notification">
+            <i class='bx bxs-bell' ></i>
+            <span class="num">6</span>
+        </a>
+        <a href="#" class="profile">
+            <img src="ena">
+        </a>
     </nav>
-
-    <!-- Header -->
-    <div class="container-fluid bg-primary py-5 mb-5" style="max-height: 370px;">
-        <!-- Ajout de la propri√©t√© style pour d√©finir une hauteur maximale -->
-        <div class="container py-5">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-lg-4 text-center">
-                    <div class="d-flex justify-content-center mb-4">
-                        <!-- Ajout des classes d-flex et justify-content-center pour centrer l'image -->
-                        
-                    </div>
-                    <h1 class="display-3 text-white">add Courses</h1>
-                    <!-- Ajout de la classe text-center pour centrer le titre -->
-                    <nav aria-label="breadcrumb">
+    <!-- NAVBAR -->
+    <!-- MAIN -->
+    <main>
+    <div class="conta">
+        <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center bg-transparent">
                             <li class="breadcrumb-item"><a href="#" class="text-white">Home</a></li>
                             <li class="breadcrumb-item"><a href="index.php" aria-current="page" class="text-white">List</a></li>
                             <li class="breadcrumb-item"><a href="add-cours.php" class="text-white">add Courses</a></li>
                         </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
+        </nav>  
     </div>
-
 
     <!-- Bouton d'ouverture du modal -->
 <button id="openModalBtn">Add Course</button>
@@ -111,11 +159,26 @@ include '../../controler/coursC.php'; // Assure-toi que le chemin vers le contr√
         <!-- Formulaire pour ajouter un cours -->
         <form onsubmit="return validateForm()" method="post" class="formulaire_cours" name="addCourseForm" >
             <label for="matiere">Course:</label>
-            <input type="text" id="matiere" name="matiere" placeholder="Course">
+            <select id="matiere" name="matiere">
+            <option value="Subject">Subject</option>
+            <option value="Spanish">Espagnol</option>
+    <option value="French">Fran√ßais</option>
+    <option value="English">Anglais</option>
+    <option value="Portuguese">Portugais</option>
+    <option value="Italian">Italien</option>
+</select>
             <span class="errormsg" id="matiereError"></span><br>
             
             <label for="niveau">Level:</label>
-            <input type="text" id="niveau" name="niveau" placeholder="Level">
+            <select id="niveau" name="niveau">
+            <option value="Level">Level</option>
+            <option value="A1">A1</option>
+    <option value="A2">A2</option>
+    <option value="B1">B1</option>
+    <option value="B2">B2</option>
+    <option value="C1">C1</option>
+    <option value="C2">C2</option>
+</select>
             <span class="errormsg" id="niveauError"></span><br>
             
             <label for="nbheure">Nb Hours:</label>
@@ -143,17 +206,13 @@ include '../../controler/coursC.php'; // Assure-toi que le chemin vers le contr√
 
 
 
-
+    </main>
+</section>
 
     <!-- Liens vers les fichiers JavaScript -->
     <script src="assets/js/cours.js"></script>
     <!-- Footer -->
-    <!-- Ins√©rez ici le contenu de la section "Footer " de la template -->
-    <footer class="container-fluid bg-dark text-light pt-5 mt-5 wow fadeIn " data-wow-delay="0.1s ">
-       
-        <!-- Back to Top -->
-        <a href="# " class="btn btn-lg btn-primary btn-lg-square back-to-top "><i class="bi bi-arrow-up "></i></a>
-    </footer>
+    
 
 </body>
 </html>

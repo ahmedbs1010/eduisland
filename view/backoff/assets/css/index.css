@@ -470,3 +470,28 @@
 .course-item:hover img {
     transform: scale(1.1);
 }
+
+
+/* Style pour le titre du modal */
+
+.modal-title {
+    font-size: 1.5em;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+
+/* Style pour le corps du modal */
+
+.modal-body {
+    font-size: 1em;
+    color: #555;
+}
+
+
+/* Style pour le footer du modal */
+
+.modal-footer {
+    background-color: #f9f9f9;
+}

@@ -4,7 +4,28 @@ include '../../config/connexion.php';
 include '../../controler/typecoursC.php';
 include '../../controler/coursC.php';
 
+// Requête SQL pour compter le nombre d'enregistrements pour chaque matière
+$sql = "SELECT l.matiere, COUNT(tc.emailuser) AS count 
+        FROM lessons l
+        LEFT JOIN typecours tc ON l.idlesson = tc.idlesson
+        GROUP BY l.matiere";
 
+// Exécutez la requête SQL
+$result = mysqli_query($conn, $sql);
+
+// Tableau pour stocker les statistiques
+$statistics = array();
+
+// Vérifiez si la requête a réussi
+if ($result) {
+    // Parcourez les résultats et stockez les statistiques dans un tableau
+    while ($row = mysqli_fetch_assoc($result)) {
+        $statistics[$row['matiere']] = $row['count'];
+    }
+}
+
+// Encodez les données des statistiques en JSON pour les transmettre à JavaScript
+$statistics_json = json_encode($statistics);
 ?>
 
 <!DOCTYPE html>
@@ -17,20 +38,18 @@ include '../../controler/coursC.php';
 
 
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
 
-    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="css/template.css">
 
 <!-- Icon Font Stylesheet -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    
-<!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Liens vers Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
  
 <script src="view/frontoff/js/main.js"></script>
 <link rel="icon" href="4.png" type="image/x-icon">
@@ -48,49 +67,74 @@ include '../../controler/coursC.php';
     
 
 
-    <!-- Barre de navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="4.png" alt="Logo" width="70" height="50" class="d-inline-block align-top me-2"> EduIsland
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " aria-current="page" href="#">Courses</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Pages
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Our Team</a></li>
-                            
-                            <li><a class="dropdown-item" href="#">tests</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-                <button class="btn btn-primary d-none d-lg-block">Join Now <i class="fas fa-arrow-right ms-3"></i></button>
-            </div>
-        </div>
-    </nav>
-
-    
-    </section>
     <!-- SIDEBAR -->
+	<section id="sidebar">
+    <a href="#" class="brand">
+        <img src="4.png" alt="EduIsland Logo" class="logo">
+        <span class="text">EduIsland</span>
+    </a>
+
+		<ul class="side-menu top">
+            <li>
+                <a href="#">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-user'></i>
+                    <span class="text">Users</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-pie-chart-alt-2'></i>
+                    <span class="text">Forum</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="index.php">
+                    <i class='bx bxs-group'></i>
+                    <span class="text">Courses</span>
+                </a>
+            </li>
+            <li>
+                <a href="add-cours.php">
+                    <i class='bx bxs-bar-chart-alt-2'></i>
+                    <span class="text">Add course</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-calendar-event'></i>
+                    <span class="text">Events</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-megaphone'></i>
+                    <span class="text">Claims</span>
+                </a>
+            </li>
+        </ul>
+<ul class="side-menu">
+    <li>
+        <a href="#">
+            <i class='bx bxs-cog'></i>
+            <span class="text">Settings</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" class="logout">
+            <i class='bx bxs-log-out-circle'></i>
+            <span class="text">Logout</span>
+        </a>
+    </li>
+</ul>
+
+	</section>
+	<!-- SIDEBAR -->
     
 
 
@@ -98,38 +142,45 @@ include '../../controler/coursC.php';
     <!-- CONTENT -->
     
   
-    <!-- NAVBAR -->
-     <!-- Header -->
-     <div class="container-fluid bg-primary py-5 mb-5" style="max-height: 350px;">
-        <!-- Ajout de la propriété style pour définir une hauteur maximale -->
-        <div class="container py-5">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-lg-4 text-center">
-                    <div class="d-flex justify-content-center mb-4">
-                        <!-- Ajout des classes d-flex et justify-content-center pour centrer l'image -->
-                        
-                    </div>
-                    <h1 class="display-3 text-white">List of Courses</h1>
-                    <!-- Ajout de la classe text-center pour centrer le titre -->
-                    <nav aria-label="breadcrumb">
+    <!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+			<a href="#" class="nav-link">Categories</a>
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a href="#" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">8</span>
+			</a>
+			<a href="#" class="profile">
+				<img src="ena">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+    
+    <!-- MAIN -->
+    <main>
+    <div class="conta">
+        <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center bg-transparent">
                             <li class="breadcrumb-item"><a href="#" class="text-white">Home</a></li>
                             <li class="breadcrumb-item"><a href="index.php" aria-current="page" class="text-white">List</a></li>
                             <li class="breadcrumb-item"><a href="add-cours.php" class="text-white">add Courses</a></li>
                         </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
+        </nav>  
     </div>
-    
-    <!-- MAIN -->
-    <main>
-    
     <div class="table-data">
     <div class="table-data order">
         <div class="head">
-            <h3>List of Typecours</h3>
+            <h3>List of Regestration to Courses</h3>
         </div>
         <table class="table table-hover text-center">
             <thead class="table-dark">
@@ -244,16 +295,40 @@ include '../../controler/coursC.php';
         <span class="close" onclick="closeModal('<?php echo $Cours['idlesson']; ?>')">&times;</span>
         <form onsubmit="return validateForm()" method="POST" name="myForm">
             <input type="hidden" name="idlesson" value="<?php echo $Cours['idlesson']; ?>"><br>
-            <label for="matiere">Matière:</label>
-            <input id="matiere_<?php echo $Cours['idlesson']; ?>" type="text" name="matiere" value="<?php echo $Cours['matiere']; ?>"><br>
+            
+            <label for="matiere">Course:</label>
+<select id="matiere_<?php echo $Cours['idlesson']; ?>" name="matiere">
+    <?php
+    // Remplacez cette boucle par la méthode que vous utilisez pour récupérer les valeurs de matiere depuis votre base de données
+    $matieres = array("Spanish", "French", "English", "Portuguese", "Italian");
+    
+    // Boucle à travers les matières existantes et crée une option pour chaque
+    foreach ($matieres as $matiere) {
+        // Vérifie si la matière correspond à celle en cours de modification
+        $selected = ($matiere == $Cours['matiere']) ? "selected" : "";
+        echo "<option value='" . $matiere . "' " . $selected . ">" . $matiere . "</option>";
+    }
+    ?>
+</select><br>
+
             <p id="error-matiere_<?php echo $Cours['idlesson']; ?>" style="color:red;"></p>
-            <label for="nbheure">Nombre d'heures:</label>
+            <label for="niveau">Level:</label>
+<select id="niveau_<?php echo $Cours['idlesson']; ?>" name="niveau">
+    <option value="A1" <?php if ($Cours['niveau'] == "A1") echo "selected"; ?>>A1</option>
+    <option value="A2" <?php if ($Cours['niveau'] == "A2") echo "selected"; ?>>A2</option>
+    <option value="B1" <?php if ($Cours['niveau'] == "B1") echo "selected"; ?>>B1</option>
+    <option value="B2" <?php if ($Cours['niveau'] == "B2") echo "selected"; ?>>B2</option>
+    <option value="C1" <?php if ($Cours['niveau'] == "C1") echo "selected"; ?>>C1</option>
+    <option value="C2" <?php if ($Cours['niveau'] == "C2") echo "selected"; ?>>C2</option>
+</select><br>
+
+            <p id="error-niveau_<?php echo $Cours['idlesson']; ?>" style="color:red;"></p>
+            <label for="nbheure">Nb Hours:</label>
             <input id="nbheure_<?php echo $Cours['idlesson']; ?>" type="text" name="nbheure" value="<?php echo $Cours['nbheure']; ?>"><br>
             <p id="error-nbheure_<?php echo $Cours['idlesson']; ?>" style="color:red;"></p>
-            <label for="niveau">Niveau:</label>
-            <input name="niveau" id="niveau_<?php echo $Cours['idlesson']; ?>" value="<?php echo $Cours['niveau']; ?>"><br>
-            <p id="error-niveau_<?php echo $Cours['idlesson']; ?>" style="color:red;"></p>
-            <label for="idt">ID enseignant:</label>
+            
+            
+            <label for="idt">ID Teacher:</label>
             <input id="idt_<?php echo $Cours['idlesson']; ?>" type="text" name="idt" value="<?php echo $Cours['idt']; ?>"><br>
             <p id="error-idt_<?php echo $Cours['idlesson']; ?>" style="color:red;"></p>
             <button type="submit" name="submit_update" class="btn btn-primary">Enregistrer</button>
@@ -276,15 +351,109 @@ include '../../controler/coursC.php';
         </div>
     </div>
 
-
-</main>
-<h1>Download PDF</h1>
+    <h1>Download PDF</h1>
     
     <form action="generate_pdf.php" method="post">
     <button id="downloadPdfBtn" type="submit">Download PDF</button>
     </form>
 
+    <div class="container">
+    <h2>Statistics of users registration tocourses</h2>
+    <!-- Redimensionnez l'élément canvas pour réduire la taille -->
+    <canvas id="statisticsChart" width="800" height="400"></canvas>
+    </div>
+</main>
 
+</section>
+
+<!-- Script JavaScript pour afficher les statistiques sous forme de graphique -->
+
+<script>
+    // Récupérez les statistiques depuis PHP
+    var statistics = <?php echo $statistics_json; ?>;
+
+    // Convertissez les statistiques en tableaux pour Chart.js
+    var labels = Object.keys(statistics);
+    var data = Object.values(statistics);
+
+    // Créez un graphique à barres avec les données
+    var ctx = document.getElementById('statisticsChart').getContext('2d');
+    // Définir un tableau de couleurs personnalisées pour chaque barre
+// Définir un tableau de couleurs personnalisées pour chaque barre
+var backgroundColors = [
+    'rgba(255, 99, 132, 0.7)', // Rouge
+    'rgba(54, 162, 235, 0.7)', // Bleu
+    'rgba(255, 206, 86, 0.7)', // Jaune
+    'rgba(75, 192, 180, 0.7)', // Vert
+    'rgba(153, 102, 255, 0.7)', // Violet
+    'rgba(255, 159, 64, 0.7)', // Orange
+    // Ajoutez d'autres couleurs personnalisées au besoin
+];
+
+var borderColor = [
+    'rgba(255, 99, 132, 1)', // Rouge
+    'rgba(54, 162, 235, 1)', // Bleu
+    'rgba(255, 206, 86, 1)', // Jaune
+    'rgba(75, 192, 192, 1)', // Vert
+    'rgba(153, 102, 255, 1)', // Violet
+    'rgba(255, 159, 64, 1)', // Orange
+    // Ajoutez d'autres couleurs personnalisées au besoin
+];
+
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Nombre de cours',
+            data: data,
+            backgroundColor: backgroundColors,
+            borderColor: borderColor,
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: false,
+        maintainAspectRatio: false,
+        legend: {
+            display: false
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    fontColor: 'rgba(0, 0, 0, 0.7)',
+                    fontSize: 12
+                },
+                gridLines: {
+                    color: 'rgba(0, 0, 0, 0.1)'
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                    fontColor: 'rgba(0, 0, 0, 0.7)',
+                    fontSize: 12
+                },
+                gridLines: {
+                    color: 'rgba(0, 0, 0, 0)'
+                }
+            }]
+        },
+        title: {
+            display: true,
+            text: 'Statistiques par matière',
+            fontSize: 16,
+            fontColor: 'rgba(0, 0, 0, 0.8)',
+            padding: 20
+        },
+        animation: {
+            duration: 2000, // Durée de l'animation en millisecondes
+            easing: 'easeInOutQuart' // Type d'interpolation de l'animation
+        }
+    }
+});
+
+</script>
 <!-- Import de la bibliothèque jsPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
 
@@ -338,12 +507,7 @@ function closeModal(id) {
 </script>
 
 <!-- Footer -->
-    <!-- Insérez ici le contenu de la section "Footer " de la template -->
-    <footer class="container-fluid bg-dark text-light pt-5 mt-5 wow fadeIn " data-wow-delay="0.1s ">
-       
-        <!-- Back to Top -->
-        <a href="# " class="btn btn-lg btn-primary btn-lg-square back-to-top "><i class="bi bi-arrow-up "></i></a>
-    </footer>
+    
     
    
 </body>
